@@ -2,6 +2,7 @@ package com.project.bootcamp.controller;
 // Stock = Ações
 
 import com.project.bootcamp.model.dto.StockDTO;
+import org.apache.coyote.Response;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,31 +16,58 @@ import java.util.List;
 
 public class StockController {
 
+    // Criar stock
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StockDTO> save(@RequestBody StockDTO dto){
         return ResponseEntity.ok(dto);
 
     }
 
+    // Alterar stock
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StockDTO> update(@RequestBody StockDTO dto){
         return ResponseEntity.ok(dto);
 
     }
 
+    // Selecionar stock
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<StockDTO>> findAll(){
         List<StockDTO> list = new ArrayList<>();
-        StockDTO dto = new StockDTO();
-        dto.setId(1l);
-        dto.setName("Magazine Luiza");
-        dto.setPrice(10D);
-        dto.setVariation(10D);
-        dto.setDate(LocalDate.now());
+        StockDTO stock1 = new StockDTO();
+        stock1.setId(1l);
+        stock1.setName("Magazine Luiza");
+        stock1.setPrice(10D);
+        stock1.setVariation(10D);
+        stock1.setDate(LocalDate.now());
+        list.add(stock1);
         return ResponseEntity.ok(list);
 
     }
 
+    // Selecionar stock por ID
+    @GetMapping(value = "/{id}", produces =  MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StockDTO> findById(@PathVariable Long id){
+        List<StockDTO> list = new ArrayList<>();
+        StockDTO stock1 = new StockDTO();
+        stock1.setId(1l);
+        stock1.setName("Magazine Luiza");
+        stock1.setPrice(10D);
+        stock1.setVariation(10D);
+        stock1.setDate(LocalDate.now());
+        StockDTO stock2 = new StockDTO();
+        stock2.setId(2l);
+        stock2.setName("WEG");
+        stock2.setPrice(20D);
+        stock2.setVariation(5D);
+        stock2.setDate(LocalDate.now());
+        list.add(stock1);
+        list.add(stock2);
+
+        StockDTO dtoSelect = list.stream().filter(x -> x.getId().compareTo(id) == 0).findFirst().get();
+        return ResponseEntity.ok(dtoSelect);
+
+    }
 
 
 
