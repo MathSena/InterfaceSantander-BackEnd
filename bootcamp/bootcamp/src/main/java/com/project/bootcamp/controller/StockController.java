@@ -2,7 +2,9 @@ package com.project.bootcamp.controller;
 // Stock = Ações
 
 import com.project.bootcamp.model.dto.StockDTO;
+import com.project.bootcamp.service.StockService;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +19,13 @@ import java.util.List;
 
 public class StockController {
 
+    @Autowired
+    private StockService service;
+
     // Criando stock
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StockDTO> save(@Valid @RequestBody StockDTO dto){
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(service.save(dto));
 
     }
 
